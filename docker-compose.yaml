@@ -1,0 +1,53 @@
+﻿services:
+  xray-otel:
+    image: amazon/aws-otel-collector:latest
+    command: --config /config/collector-config.yml
+    container_name: xray-otel
+    volumes:
+      - ~/.aws:/home/aoc/.aws:ro
+      - .:/config
+    environment:
+      - AWS_REGION=ap-southeast-1
+    ports:
+      - "4317:4317"
+      - "2000:2000"
+      - "55681:55681"
+  xray-jeager:
+    image: xray/jeager
+    build:
+      context: .
+      dockerfile: Jeager/Dockerfile
+    container_name: xray-jeager
+    depends_on:
+      - xray-otel
+    environment:
+      - AWS_REGION=ap-southeast-1
+      - ASPNETCORE_ENVIRONMENT= Development
+    ports:
+      - "5102:80"
+
+  xray-grpc:
+    image: xray/grpc
+    build:
+      context: .
+      dockerfile: Grpc/Dockerfile
+    container_name: xray-grpc
+    depends_on:
+      - xray-otel
+    ports:
+      - "5131:80"
+    environment:
+      - AWS_REGION=ap-southeast-1
+      - ASPNETCORE_ENVIRONMENT= Development
+  xray-database:
+    image: postgres:16.3
+    container_name: xray-database
+    depends_on:
+      - xray-otel
+    ports:
+      - "5435:5432"
+    environment:
+      POSTGRES_USER: kong
+      POSTGRES_DB: kong
+      POSTGRES_PASSWORD: kongpass
+    restart: unless-stopped

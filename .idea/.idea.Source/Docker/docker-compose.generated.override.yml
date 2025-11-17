@@ -1,0 +1,38 @@
+# This is a generated file. Not intended for manual editing.
+services:
+  grpc:
+    build:
+      context: "C:\\DEV\\SOURCES\\Tracing\\Source"
+      dockerfile: "Grpc/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net6.0/Grpc.dll"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "grpc:dev"
+    ports: []
+    volumes:
+    - "C:\\DEV\\SOURCES\\Tracing\\Source\\Grpc:/app:rw"
+    - "C:\\DEV\\SOURCES\\Tracing\\Source:/src:rw"
+    - "C:\\DEV\\nuget:/root/.nuget/packages"
+    working_dir: "/app"
+  notification:
+    build:
+      context: "C:\\DEV\\SOURCES\\Tracing\\Source"
+      dockerfile: "Jeager/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net6.0/Jeager.dll"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "notification:dev"
+    ports: []
+    volumes:
+    - "C:\\DEV\\SOURCES\\Tracing\\Source\\Jeager:/app:rw"
+    - "C:\\DEV\\SOURCES\\Tracing\\Source:/src:rw"
+    - "C:\\DEV\\nuget:/root/.nuget/packages"
+    working_dir: "/app"
