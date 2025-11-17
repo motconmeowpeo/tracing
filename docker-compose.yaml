@@ -12,6 +12,8 @@
       - "4317:4317"
       - "2000:2000"
       - "55681:55681"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   xray-jeager:
     image: 211125386285.dkr.ecr.ap-southeast-1.amazonaws.com/uat-xray-tracing:jeager
     container_name: xray-jeager
@@ -20,19 +22,20 @@
     environment:
       - AWS_REGION=ap-southeast-1
       - ASPNETCORE_ENVIRONMENT= Development
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     ports:
       - "5102:80"
 
   xray-grpc:
     image: 211125386285.dkr.ecr.ap-southeast-1.amazonaws.com/uat-xray-tracing:grpc
-    build:
-      context: .
-      dockerfile: Grpc/Dockerfile
     container_name: xray-grpc
     depends_on:
       - xray-otel
     ports:
       - "5131:80"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     environment:
       - AWS_REGION=ap-southeast-1
       - ASPNETCORE_ENVIRONMENT= Development
@@ -43,6 +46,8 @@
       - xray-otel
     ports:
       - "5435:5432"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     environment:
       POSTGRES_USER: kong
       POSTGRES_DB: kong
