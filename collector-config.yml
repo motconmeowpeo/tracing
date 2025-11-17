@@ -8,9 +8,9 @@ exporters:
   debug:
     verbosity: detailed
   awsxray:
-    region: us-west-2
+    region: ap-southeast-1
   awsemf:
-    region: us-west-2
+    region: ap-southeast-1
 
 service:
   pipelines:
