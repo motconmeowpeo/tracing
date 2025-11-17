@@ -13,10 +13,7 @@
       - "2000:2000"
       - "55681:55681"
   xray-jeager:
-    image: xray/jeager
-    build:
-      context: .
-      dockerfile: Jeager/Dockerfile
+    image: 211125386285.dkr.ecr.ap-southeast-1.amazonaws.com/uat-xray-tracing:jeager
     container_name: xray-jeager
     depends_on:
       - xray-otel
@@ -27,7 +24,7 @@
       - "5102:80"
 
   xray-grpc:
-    image: xray/grpc
+    image: 211125386285.dkr.ecr.ap-southeast-1.amazonaws.com/uat-xray-tracing:grpc
     build:
       context: .
       dockerfile: Grpc/Dockerfile
