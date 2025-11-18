@@ -9,6 +9,9 @@ exporters:
     verbosity: detailed
   awsxray:
     region: ap-southeast-1
+    endpoint: "https://vpce-075be96e13cf931d3-8b15tt0k.xray.ap-southeast-1.vpce.amazonaws.com"
+    no_verify_ssl: false
+
   awsemf:
     region: ap-southeast-1
 
