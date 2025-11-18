@@ -8,12 +8,15 @@
       - .:/config
     environment:
       - AWS_REGION=ap-southeast-1
+      - AWS_PROFILE=default
     ports:
       - "4317:4317"
+      - "4318:4318"
       - "2000:2000"
       - "55681:55681"
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    restart: always
   xray-jeager:
     image: 211125386285.dkr.ecr.ap-southeast-1.amazonaws.com/uat-xray-tracing:jeager
     container_name: xray-jeager
